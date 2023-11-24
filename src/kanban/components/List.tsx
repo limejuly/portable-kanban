@@ -10,7 +10,7 @@ import {
   MdOutlineArchive,
 } from 'react-icons/md';
 import styled from 'styled-components';
-
+import { vscode } from '../../vscode';
 import {
   Kanban as KanbanModel,
   List as ListModel,
@@ -139,6 +139,10 @@ export const List = ({ kanban, list }: Props) => {
             ? kanban.settings.labels.filter((l) => l.title === labelName)
             : [];
 
+          vscode.postMessage({
+            type: 'card-file',
+            card_title: card.title,
+          });
           return addCardToKanban(arr, newList ?? list, {
             ...newCard(uuid(), list.id),
             title,
@@ -234,8 +238,8 @@ export const List = ({ kanban, list }: Props) => {
                 {filteredCards.length === 1
                   ? '1 card'
                   : filteredCards.length > 1
-                  ? `${filteredCards.length} cards`
-                  : ''}
+                    ? `${filteredCards.length} cards`
+                    : ''}
               </TextXs>
               <div
                 style={{

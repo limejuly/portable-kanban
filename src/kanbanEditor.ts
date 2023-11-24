@@ -16,7 +16,7 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
 
   private static readonly viewType = 'portable-kanban.edit';
 
-  constructor(private readonly context: vscode.ExtensionContext) {}
+  constructor(private readonly context: vscode.ExtensionContext) { }
 
   public async resolveCustomTextEditor(
     document: vscode.TextDocument,
@@ -61,6 +61,8 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
         case 'open':
           vscode.env.openExternal(vscode.Uri.parse(e.url));
           return;
+        case 'card-file':
+          vscode.window.showInformationMessage(e.card_title);
       }
     });
   }
@@ -96,8 +98,8 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
         theme === 'dark'
           ? 'dark.css'
           : theme === 'light'
-          ? 'light.css'
-          : 'system.css'
+            ? 'light.css'
+            : 'system.css'
       )
     );
     const nonce = uuidv4();

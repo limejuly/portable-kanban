@@ -96,11 +96,11 @@ const cardSelector = selectorFamily<Card | undefined, string[]>({
   key: 'cardSelector',
   get:
     ([listId, cardId]) =>
-    ({ get }) => {
-      return get(kanbanState)
-        .lists.find((v) => v.id === listId)
-        ?.cards.find((v) => v.id === cardId);
-    },
+      ({ get }) => {
+        return get(kanbanState)
+          .lists.find((v) => v.id === listId)
+          ?.cards.find((v) => v.id === cardId);
+      },
 });
 
 const filteredTextState = selector({
@@ -127,6 +127,7 @@ const filteredLabelState = selector({
   },
 });
 
+// quick functions to use the value of the states
 export const selectors = {
   useTitle: () => useRecoilValue(titleState),
   useFilterText: () => useRecoilValue(filteredTextState),
@@ -139,6 +140,7 @@ export const selectors = {
   useMenu: () => useRecoilValue(menuState),
 };
 
+// quick actions to set the states
 export const actions = {
   useSetTitle: () => {
     const setState = useSetRecoilState(titleState);
@@ -173,6 +175,7 @@ export const actions = {
   },
 };
 
+// here are the final actions, both do the sub action, and update kanbanState.
 export const kanbanActions = {
   useAddList: () => {
     const [kanban, setState] = useRecoilState(kanbanState);
@@ -246,6 +249,7 @@ export const kanbanActions = {
       [kanban]
     );
   },
+  // not used now
   useAddCard: () => {
     const [kanban, setState] = useRecoilState(kanbanState);
     return React.useCallback(

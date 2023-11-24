@@ -181,15 +181,15 @@ export const moveAllCardsToList = (
     lists: kanban.lists.map((l) =>
       l.id === toList.id
         ? {
-            ...l,
-            cards: [
-              ...l.cards,
-              ...fromList.cards.map((c) => ({ ...c, listId: toList.id })),
-            ],
-          }
+          ...l,
+          cards: [
+            ...l.cards,
+            ...fromList.cards.map((c) => ({ ...c, listId: toList.id })),
+          ],
+        }
         : l.id === fromList.id
-        ? { ...fromList, cards: [] }
-        : l
+          ? { ...fromList, cards: [] }
+          : l
     ),
   };
 };
@@ -217,9 +217,9 @@ export const updateCard = (kanban: Kanban, list: List, card: Card): Kanban => {
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: list.cards.map((c) => (c.id === card.id ? card : c)),
-          }
+          ...list,
+          cards: list.cards.map((c) => (c.id === card.id ? card : c)),
+        }
         : l
     ),
   };
@@ -241,9 +241,9 @@ export const copyCard = (kanban: Kanban, card: Card): Kanban => {
     lists: kanban.lists.map((l) =>
       l.id === card.listId
         ? {
-            ...l,
-            cards: [...l.cards, { ...card, id: uuid() }],
-          }
+          ...l,
+          cards: [...l.cards, { ...card, id: uuid() }],
+        }
         : l
     ),
   };
@@ -276,8 +276,8 @@ export const moveCardAcrossList = (
       l.id === fromList.id
         ? { ...fromList, cards: fromCards }
         : l.id === toList.id
-        ? { ...toList, cards: toCards }
-        : l
+          ? { ...toList, cards: toCards }
+          : l
     ),
   };
 };
@@ -347,16 +347,16 @@ export const addCheckBox = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    checkboxes: [...card.checkboxes, checkbox],
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                checkboxes: [...card.checkboxes, checkbox],
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -377,18 +377,18 @@ export const updateCheckBox = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    checkboxes: card.checkboxes.map((check) =>
-                      check.id === checkbox.id ? checkbox : check
-                    ),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                checkboxes: card.checkboxes.map((check) =>
+                  check.id === checkbox.id ? checkbox : check
+                ),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -405,18 +405,18 @@ export const deleteCheckBox = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    checkboxes: card.checkboxes.filter(
-                      (check) => check.id !== id
-                    ),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                checkboxes: card.checkboxes.filter(
+                  (check) => check.id !== id
+                ),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -441,20 +441,20 @@ export const moveCheckBox = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    checkboxes: insert(
-                      movedCheckBox,
-                      toCheckboxIndex,
-                      checkbox
-                    ),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                checkboxes: insert(
+                  movedCheckBox,
+                  toCheckboxIndex,
+                  checkbox
+                ),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -475,16 +475,16 @@ export const addLabel = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    labels: [...card.labels, label],
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                labels: [...card.labels, label],
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -505,18 +505,18 @@ export const updateLabel = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    labels: card.labels.map((l) =>
-                      l.id === label.id ? label : l
-                    ),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                labels: card.labels.map((l) =>
+                  l.id === label.id ? label : l
+                ),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -533,16 +533,16 @@ export const deleteLabel = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    labels: card.labels.filter((l) => l.id !== id),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                labels: card.labels.filter((l) => l.id !== id),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -563,16 +563,16 @@ export const addComments = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    comments: [...card.comments, comment],
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                comments: [...card.comments, comment],
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -593,18 +593,18 @@ export const updateComments = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    comments: c.comments.map((cc) =>
-                      cc.id === comment.id ? comment : cc
-                    ),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                comments: c.comments.map((cc) =>
+                  cc.id === comment.id ? comment : cc
+                ),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
@@ -621,16 +621,16 @@ export const deleteComments = (
     lists: kanban.lists.map((l) =>
       l.id === list.id
         ? {
-            ...list,
-            cards: l.cards.map((c) =>
-              card.id === c.id
-                ? {
-                    ...card,
-                    comments: c.comments.filter((cc) => cc.id !== id),
-                  }
-                : c
-            ),
-          }
+          ...list,
+          cards: l.cards.map((c) =>
+            card.id === c.id
+              ? {
+                ...card,
+                comments: c.comments.filter((cc) => cc.id !== id),
+              }
+              : c
+          ),
+        }
         : l
     ),
   };
