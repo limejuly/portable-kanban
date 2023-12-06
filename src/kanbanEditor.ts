@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as vscode from 'vscode';
 
 import { Kanban, toJson } from './kanban/models/kanban';
+import { activate } from './extension';
 
 export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -61,12 +62,32 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
         case 'open':
           vscode.env.openExternal(vscode.Uri.parse(e.url));
           return;
-        case 'card-file':
-          vscode.window.showInformationMessage(e.card_title);
+        case 'new-card-file':
+          this.activateFoam();
+          let template = vscode.Uri.file("/Users/luyj/notes/.foam/templates/new-note.md");
+          vscode.commands.executeCommand("foam-vscode.create-note", {
+            title: e.card_title,
+            templatePath: template.path,
+            onFileExists: 'cancel'
+          });
       }
     });
   }
 
+  private activateFoam() {
+    var foamExtension: any = vscode.extensions.getExtension('foam.foam-vscode');
+    if (foamExtension.isActive === false) {
+      vscode.window.showInformationMessage("activating Foam.");
+      foamExtension.activate().then(
+        function () {
+          vscode.window.showInformationMessage("Foam activated");
+        },
+        function () {
+          vscode.window.showErrorMessage("Foam activation failed");
+        }
+      );
+    }
+  }
   private getHtmlForWebview(webview: vscode.Webview): string {
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'kanban.js')

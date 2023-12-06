@@ -69,6 +69,7 @@ export const ArchiveLists = ({ lists }: Props) => {
                 labels: [],
                 checkboxes: [],
                 comments: [],
+                inline: false
               }}
               isEdit={false}
               editable={false}

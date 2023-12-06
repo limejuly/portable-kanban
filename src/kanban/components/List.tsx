@@ -140,7 +140,7 @@ export const List = ({ kanban, list }: Props) => {
             : [];
 
           vscode.postMessage({
-            type: 'card-file',
+            type: 'new-card-file',
             card_title: card.title,
           });
           return addCardToKanban(arr, newList ?? list, {

@@ -38,6 +38,7 @@ export type Card = {
   labels: Label[];
   checkboxes: CheckBox[];
   comments: Comment[];
+  inline: boolean;
 };
 
 export type Label = {
@@ -82,6 +83,7 @@ export const newCard = (id: string, listId: string) => {
     labels: [],
     checkboxes: [],
     comments: [],
+    inline: false
   };
 };
 
@@ -699,6 +701,7 @@ const cardDecoder: Decoder<Card> = object({
   labels: array(labelDecoder),
   checkboxes: array(checkboxDecoder),
   comments: array(commentDecoder),
+  inline: boolean(),
 });
 
 const listDecoder: Decoder<List> = object({
