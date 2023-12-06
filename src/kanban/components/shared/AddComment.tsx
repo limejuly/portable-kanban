@@ -55,7 +55,7 @@ export const AddComment = ({ addText, placeholder, type, onEnter }: Props) => {
         }}
         placeholder={placeholder}
         value={text}
-        autoFocus={true}
+      // autoFocus={true}
       />
       <AddButton
         text={addText}

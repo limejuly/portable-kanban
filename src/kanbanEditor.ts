@@ -70,6 +70,11 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
             templatePath: template.path,
             onFileExists: 'cancel'
           });
+        case 'open-card-file':
+          const relativePath = `diary/current/${e.file_name}.md`;
+          const projectFolder = vscode.workspace.rootPath;
+          const fileUri = vscode.Uri.file(`${projectFolder}/${relativePath}`);
+          vscode.commands.executeCommand('vscode.open', fileUri);
       }
     });
   }

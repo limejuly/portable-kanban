@@ -370,7 +370,14 @@ const EditCard = ({ kanban }: Props) => {
           )}
           <Line>
             <Head>
-              <Icon>
+              <Icon
+                onClick={() => {
+                  // TODO open md file
+                  vscode.postMessage({
+                    'type': "open-card-file",
+                    'file_name': card?.title
+                  });
+                }}>
                 <MdSubtitles />
               </Icon>
               <Title
