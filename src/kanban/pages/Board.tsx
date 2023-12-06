@@ -39,7 +39,6 @@ type Props = {
 
 const Board = ({ kanban }: Props) => {
   const title = selectors.useTitle();
-  const setAddCard = actions.useSetAddingCard();
   const moveList = kanbanActions.useMoveList();
   const moveCard = kanbanActions.useMoveCard();
   const moveCardAcrossList = kanbanActions.useMoveCardAcrossList();
@@ -98,7 +97,6 @@ const Board = ({ kanban }: Props) => {
   return kanban ? (
     <Container
       onClick={() => {
-        setAddCard(undefined);
         menuClose();
       }}>
       <Header title={title ?? 'untitled'} />

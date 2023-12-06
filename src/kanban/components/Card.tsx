@@ -11,6 +11,7 @@ import { useAutoFocus } from '../hooks/useAutoFocus';
 import { Card as CardModel } from '../models/kanban';
 import { actions } from '../store';
 import { TextXs } from './shared/Text';
+import { CheckBox } from './shared/CheckBox';
 
 const Container = styled.div`
   min-height: 20px;
@@ -136,12 +137,12 @@ export const Card = ({
     () =>
       state.card.dueDate
         ? format(Date.now(), 'yyyy-MM-dd') ===
-          format(
-            sub(state.card.dueDate, {
-              days: 1,
-            }),
-            'yyyy-MM-dd',
-          )
+        format(
+          sub(state.card.dueDate, {
+            days: 1,
+          }),
+          'yyyy-MM-dd',
+        )
         : false,
     [state.card.dueDate],
   );
@@ -159,7 +160,7 @@ export const Card = ({
     () =>
       state.card.dueDate
         ? format(state.card.dueDate, 'yyyy-MM-dd') ===
-          format(Date.now(), 'yyyy-MM-dd')
+        format(Date.now(), 'yyyy-MM-dd')
         : false,
     [state.card.dueDate],
   );
@@ -186,26 +187,41 @@ export const Card = ({
           <Title>{state.card.title}</Title>
         </>
       ) : state.isEdit ? (
-        <Input
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            const card = { ...state.card, title: e.target.value };
-            setState({
-              ...state,
-              card,
-            });
-            setAddCard(card);
-          }}
-          value={state.card.title}
-          onCompositionStart={() => {
-            setIsComposing(true);
-          }}
-          onCompositionEnd={() => {
-            setIsComposing(false);
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder={'Enter title of card'}
-          ref={inputRef}
-        />
+        <div>
+          <Input
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              const card = { ...state.card, title: e.target.value };
+              setState({
+                ...state,
+                card,
+              });
+              setAddCard(card);
+            }}
+            value={state.card.title}
+            onCompositionStart={() => {
+              setIsComposing(true);
+            }}
+            onCompositionEnd={() => {
+              setIsComposing(false);
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder={'Enter title of card'}
+            ref={inputRef}
+          />
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            <CheckBox checked={state.card.inline}
+              onChange={function (checked: boolean): void {
+                const card = { ...state.card, inline: checked };
+                setState({
+                  ...state,
+                  card,
+                });
+                setAddCard(card);
+              }}
+            />
+            <Title>inline</Title>
+          </div>
+        </div>
       ) : (
         <Link
           key={card.id}
