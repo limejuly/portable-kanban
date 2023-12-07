@@ -68,6 +68,18 @@
           "type": "boolean",
           "default": "true",
           "description": "Card task list is shown."
+        },
+        "portable-kanban.card-template-path": {
+          "title": "Portable Kanban template path",
+          "type": "string",
+          "default": "/Users/luyj/notes/.foam/templates/new-note.md",
+          "description": "card template path"
+        },
+        "portable-kanban.card-relative-path": {
+          "title": "Portable Kanban relative path",
+          "type": "string",
+          "default": "diary/current",
+          "description": "card relative path"
         }
       }
     }

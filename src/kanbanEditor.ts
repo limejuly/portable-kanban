@@ -63,22 +63,43 @@ export class KanbanEditorProvider implements vscode.CustomTextEditorProvider {
           vscode.env.openExternal(vscode.Uri.parse(e.url));
           return;
         case 'new-card-file':
-          this.activateFoam();
-          let template = vscode.Uri.file("/Users/luyj/notes/.foam/templates/new-note.md");
-          vscode.commands.executeCommand("foam-vscode.create-note", {
-            title: e.card_title,
-            templatePath: template.path,
-            onFileExists: 'cancel'
-          });
+          this.createCardFile(e.card_title);
         case 'open-card-file':
-          const relativePath = `diary/current/${e.file_name}.md`;
+          let relative_path = vscode.workspace
+            .getConfiguration()
+            .get('portable-kanban.card-relative-path') as string;
+          const relativePath = `${relative_path}/${e.card_title}.md`;
           const projectFolder = vscode.workspace.rootPath;
           const fileUri = vscode.Uri.file(`${projectFolder}/${relativePath}`);
-          vscode.commands.executeCommand('vscode.open', fileUri);
+
+          vscode.workspace.fs.stat(fileUri).then((stat) => {
+            // File exists
+            console.log('File exists.');
+            // TODO any better way?
+            vscode.commands.executeCommand('vscode.open', fileUri);
+          }, (err) => {
+            // File does not exist
+            console.error('File does not exist.');
+            this.createCardFile(e.card_title);
+          });
+
+        // vscode.commands.executeCommand('vscode.open', fileUri);
       }
     });
   }
 
+  private createCardFile(file_name: string) {
+    this.activateFoam();
+    let template_path = vscode.workspace
+      .getConfiguration()
+      .get('portable-kanban.card-template-path') as string;
+    let template = vscode.Uri.file(template_path);
+    vscode.commands.executeCommand("foam-vscode.create-note", {
+      title: file_name,
+      templatePath: template.path,
+      onFileExists: 'cancel'
+    });
+  }
   private activateFoam() {
     var foamExtension: any = vscode.extensions.getExtension('foam.foam-vscode');
     if (foamExtension.isActive === false) {

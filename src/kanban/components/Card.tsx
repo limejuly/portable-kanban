@@ -2,7 +2,7 @@ import format from 'date-fns/format';
 import sub from 'date-fns/sub';
 import * as React from 'react';
 import { FaRegComment } from 'react-icons/fa';
-import { MdDateRange } from 'react-icons/md';
+import { MdDateRange, MdSubtitles } from 'react-icons/md';
 import { RiTaskLine } from 'react-icons/ri';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import { Card as CardModel } from '../models/kanban';
 import { actions } from '../store';
 import { TextXs } from './shared/Text';
 import { CheckBox } from './shared/CheckBox';
+import { vscode } from '../../vscode';
 
 const Container = styled.div`
   min-height: 20px;
@@ -211,6 +212,7 @@ export const Card = ({
           <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
             <CheckBox checked={state.card.inline}
               onChange={function (checked: boolean): void {
+                console.log(`checked ${checked}`);
                 const card = { ...state.card, inline: checked };
                 setState({
                   ...state,
@@ -285,6 +287,20 @@ export const Card = ({
                 </div>
               </CardInfo>
             )}
+            {!state.card.inline && (
+              <CardInfo>
+                <CardInfoIcon
+                  onClick={() => {
+                    vscode.postMessage({
+                      'type': "open-card-file",
+                      'card_title': card?.title
+                    });
+                  }} >
+                  <MdSubtitles />
+                </CardInfoIcon>
+              </CardInfo>
+            )
+            }
           </div>
         </Link>
       )}

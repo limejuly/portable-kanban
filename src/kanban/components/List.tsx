@@ -139,14 +139,12 @@ export const List = ({ kanban, list }: Props) => {
             ? kanban.settings.labels.filter((l) => l.title === labelName)
             : [];
 
-          vscode.postMessage({
-            type: 'new-card-file',
-            card_title: card.title,
-          });
+          const inline = card.inline;
           return addCardToKanban(arr, newList ?? list, {
             ...newCard(uuid(), list.id),
             title,
             labels,
+            inline: inline
           });
         }, kanban),
       );
