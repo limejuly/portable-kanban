@@ -210,7 +210,7 @@ export const Card = ({
             ref={inputRef}
           />
           <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-            <CheckBox checked={state.card.inline}
+            <CheckBox checked={state.card.inline ?? false}
               onChange={function (checked: boolean): void {
                 console.log(`checked ${checked}`);
                 const card = { ...state.card, inline: checked };
